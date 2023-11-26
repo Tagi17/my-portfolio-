@@ -22,10 +22,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-          <body className={inter.className}>
-                <Cube/>
-              {children}
-          </body>
+        <body className={inter.className}>
+              <Cube/>
+            {children}
+        </body>
     </html>
   )
 }

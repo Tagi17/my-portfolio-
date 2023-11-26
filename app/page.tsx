@@ -11,10 +11,8 @@ import { useEffect } from 'react';
 const YourComponent = () => {
 
   return (
-    <div>
-      <div className='text'>
-        weooo
-      </div>
+    <div className="text">
+        WOW
     </div>
   );
 };

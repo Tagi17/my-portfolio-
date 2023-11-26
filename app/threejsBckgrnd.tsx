@@ -4,29 +4,34 @@ import './globals.css'
 
 import * as THREE from 'three';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const Cube: React.FC = () => {
+    const canvasRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector('#bg') as HTMLCanvasElement,
-    });
-    renderer.setPixelRatio(window.devicePixelRatio);
+    const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight );
-    camera.position.setZ(12);
 
-    renderer.render(scene, camera);
+    const canvasContainer = canvasRef.current;
+    if (canvasContainer) {
+        canvasContainer.appendChild(renderer.domElement);
+    }
 
     const geometry = new THREE.BoxGeometry(1, 1, 1)
     const material = new THREE.MeshBasicMaterial( { color: 0xFF6347, wireframe: true });
     const cube = new THREE.Mesh( geometry, material );
-
+    
     scene.add(cube)
+    camera.position.setZ(12);
+   
     const pointLight = new THREE.PointLight(0xffffff)
     pointLight.position.set(1,1,1)
+    scene.add(pointLight);
+
+    renderer.render(scene, camera);
 
     function animate(){
         requestAnimationFrame(animate);
@@ -37,7 +42,12 @@ const Cube: React.FC = () => {
         renderer.render(scene,camera);
     };
         animate();
+        return () => {
+            if (canvasContainer) {
+              canvasContainer.removeChild(renderer.domElement);
+            }
+          };
     }, []);
-    return <canvas id="bg" style={{ maxHeight: "100vh", overflow: "hidden" }}></canvas>;
+    return <div ref={canvasRef} style={{ width: '100%', height: '100%', position: 'fixed', zIndex: -1 }} />;
 };
 export default Cube;
