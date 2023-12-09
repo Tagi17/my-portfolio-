@@ -26,6 +26,7 @@ const Cube: React.FC = () => {
     
     scene.add(cube)
     camera.position.setZ(12);
+    camera.position.set(0, 0, 5);
    
     const pointLight = new THREE.PointLight(0xffffff)
     pointLight.position.set(1,1,1)
@@ -48,6 +49,6 @@ const Cube: React.FC = () => {
             }
           };
     }, []);
-    return <div ref={canvasRef} style={{ width: '100%', height: '100%', position: 'fixed', zIndex: -1 }} />;
+    return <div ref={canvasRef} style={{ width: '100vw', height: '100vh', position: 'fixed', zIndex: -1 }} />;
 };
 export default Cube;

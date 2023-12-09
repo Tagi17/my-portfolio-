@@ -1,14 +1,16 @@
 import './globals.css'
 import '@radix-ui/themes/styles.css';
-import './style.scss'
 
-import Cube from './threejsBckgrnd';
-import { Inter } from 'next/font/google'
+import Home from './page';
+import { Merriweather } from 'next/font/google'
 import type { Metadata } from 'next'
+import Navbar from './components/Navbar'
+import ScrollingBackground from './scrollingBckgrnd';
+import dynamic from 'next/dynamic';
 
 // import { Theme } from '@radix-ui/themes';
 
-const inter = Inter({ subsets: ['latin'] })
+const merriweather = Merriweather({ weight: "400", subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,12 +22,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const sectionIds = ['section1', 'section2', 'section3'];
+
   return (
+    <>
     <html lang="en">
-        <body className={inter.className}>
-              <Cube/>
+        <body className={merriweather.className}>
+          <Navbar sectionIds={sectionIds}/>
+           <ScrollingBackground />
             {children}
         </body>
     </html>
+  </>
   )
 }
