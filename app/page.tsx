@@ -40,7 +40,7 @@ const Home = () => {
     <div>
       <div className="main-container">
         <Parallax pages={7} style={{ top: '0', left: '0' }}>
-          <ParallaxLayer offset={0} speed={0.5} style={{ position: 'relative', height: '100vh' }} onClick={() => ref.current.scrollTo()}>
+          <ParallaxLayer offset={0} speed={0.5} style={{ position: 'relative', height: '100vh' }} >
             <div className="content">
               <HashCards/>
             </div>
