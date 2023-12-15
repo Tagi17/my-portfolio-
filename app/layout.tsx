@@ -8,8 +8,6 @@ import Navbar from './components/Navbar'
 import ScrollingBackground from './scrollingBckgrnd';
 import dynamic from 'next/dynamic';
 
-// import { Theme } from '@radix-ui/themes';
-
 const merriweather = Merriweather({ weight: "400", subsets: ['latin'] })
 
 export const metadata: Metadata = {

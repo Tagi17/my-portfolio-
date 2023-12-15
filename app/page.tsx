@@ -28,8 +28,6 @@ const Home = () => {
     const observer = textAnimation();
 
     return () => {
-      // Disconnect the observer when the component unmounts
-      // const textElement = document.querySelector('.text-3d');
       if (observer) {
         observer.disconnect();
       }

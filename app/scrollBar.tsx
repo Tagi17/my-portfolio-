@@ -24,7 +24,6 @@ const ScrollBar: React.FC = () => {
     }, []);
     return (
        <div>
-        
        </div>
     );
 };

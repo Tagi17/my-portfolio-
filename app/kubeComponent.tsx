@@ -1,29 +1,40 @@
 'use client'
 
-import React, { useEffect, useRef } from "react";
-import { camera, cube, renderer, scene } from "./three";
+import React, { useEffect, useRef } from 'react';
 
-const KubeComponent: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+import { createCubeScene } from './three';
+
+const KubeComponent = () => {
+  const containerRef = useRef<HTMLDivElement>(null); // Specify the ref type
 
   useEffect(() => {
     const container = containerRef.current;
-
-    if (container) {
-      container.appendChild(renderer.domElement);
+    if (!container) {
+      return;
     }
 
-    function animate() {
+    const { scene, camera, renderer, cube } = createCubeScene();
+    container.appendChild(renderer.domElement);
+
+    const animate = () => {
       requestAnimationFrame(animate);
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
       renderer.render(scene, camera);
-      cube.update();
-    }
+    };
 
     animate();
 
     return () => {
       if (container) {
         container.removeChild(renderer.domElement);
+      }
+      // Additional cleanup for THREE.js objects
+      cube.geometry.dispose();
+      if (Array.isArray(cube.material)) {
+        cube.material.forEach(mat => mat.dispose());
+      } else {
+        cube.material.dispose();
       }
     };
   }, []);
