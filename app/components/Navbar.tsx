@@ -3,11 +3,12 @@
 import '.././globals.css'
 
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
+import { useEffect, useState } from 'react';
 
 import Home from '.././page';
+import HtmlCanvas from '.././htmlCanvas';
 import Image from 'next/image';
 import React from 'react';
-import logo from ".././resizedletterNwBlackbckgrn.png";
 import logo1 from ".././thelettern.png";
 
 interface NavbarProps {
@@ -21,6 +22,17 @@ const Navbar: React.FC<NavbarProps> = ({ sectionIds }) => {
       behavior: 'smooth',
     });
   }
+  const { updateNavbarColor } = HtmlCanvas();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Call updateNavbarColor with the ID of the element below the navbar
+      updateNavbarColor('element-below-navbar');
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
     return (
         <div className='navbar'>
@@ -57,7 +69,7 @@ const Navbar: React.FC<NavbarProps> = ({ sectionIds }) => {
                 </li>
                 <li> 
                     <ScrollLink className="push" to="section2" smooth={true} duration={500}>
-                        Articles
+                        Experience 
                     </ScrollLink>
                 </li>
                   <li>
@@ -68,11 +80,6 @@ const Navbar: React.FC<NavbarProps> = ({ sectionIds }) => {
                 </ul>
               </div>
               <div className="navbar-end">
-                {/* <Link href="/button" passHref>
-                  <div className="btn">Button</div>
-                </Link> */}
-            {/* </div> */}
-          {/* </div> */}
         </div>  
       </div>
     );

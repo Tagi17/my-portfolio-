@@ -22,11 +22,44 @@ body, div {
   overflow-x: hidden;
 }
 .centered-text {
+  perspective: 500px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
+.text-3d {
+  font-size: 4em;
+  color: #fff;
+  white-space: nowrap;
+  will-change: transform;
+  transition: transform 0.5s;
+  cursor: pointer;
+  animation: emergeFromBackground 2s ease-out forwards;
+  opacity: 0;
+    transform: translateZ(-300px) scale(0.1);
+    transition: transform 0.5s;
+}
+@keyframes emergeFromBackground {
+  0% {
+      transform: translateZ(-300px) scale(0.1);
+      opacity: 0;
+  }
+  100% {
+      transform: translateZ(0) scale(1);
+      opacity: 1;
+  }
+}
+.text-3d.animate {
+  /* Animation properties */
+  animation: emergeFromBackground 2s ease-out forwards;
+  opacity: 1;
+  transform: translateZ(0) scale(1);
+}
+.text-3d:hover {
+  transform: rotateY(20deg) translateZ(50px);
+  text-shadow: 5px 5px 20px rgba(0,0,0,0.5);
 }
 *::-webkit-scrollbar {
   width: 11px;
@@ -52,10 +85,12 @@ body, div {
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--tertiary);
 }
-
+.wave-container {
+  /* position: relative; */
+}
 .home{
   padding-top: 20vh;
-  font-size: 1.5rem;
+  font-size: 2rem;
   padding-bottom: 20vh;
   text-align: center;
   display: flex;
@@ -63,13 +98,152 @@ body, div {
   justify-content: center;
   height: 100vh;
 }
+.centered-text {
+  position: absolute;
+  top: 50%; /* Adjust these values as needed */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #993020; /* Choose a color that contrasts well with the SVG */
+  font-size: 2rem; /* Adjust size as needed */
+  z-index: 10; /* Ensures the text is above the SVG */
+  /* -webkit-animation: glow 1s ease-in-out infinite alternate; */
+  /* -moz-animation: glow 1s ease-in-out infinite alternate; */
+  animation: glow 1s ease-in-out infinite alternate;
+}
+.card-line-container {
+  display: grid;
+  grid-template-columns: 1fr 2px 1fr; /* Three columns: left card, line, right card */
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  grid-auto-rows: minmax(300px, auto);  /* Height of each row */
+  padding: 0 20px;
+}
+.card-line-container::after {
+  content: '';
+  position: absolute;
+  grid-column: 2 / 3; /* Place the line in the second column */
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  bottom: 0;
+  width: 2px; /* Width of the line */
+  background: white; /* Color of the line */
+  z-index: 0;
+}
+.cardAbout {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.15);  
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  padding: 11px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  text-align: center;
+  max-width: 300px;
+  margin: 0;
+  display: flex; 
+  align-items: center;
+  font-size: 1.3rem;
+  position: relative; 
+  z-index: 1;
+  width: 300px; 
+  justify-self: center; 
+}
+.image-container {
+  width: 80px; /* Width of the image container */
+  height: 80px; /* Height of the image container */
+  border-radius: 10px; /* Curved border for the image */
+  overflow: hidden; /* Hide overflow to maintain border-radius */
+  margin-right: 11px; /* Space between image and text */
+}
+.cardAbout img {
+  width: 100%; 
+  height: auto; 
+  position: relative; /* Needed for absolute positioning of child elements */
+  overflow: visible;
+}
+.cardAbout .popup:hover {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  background-color: red; /* Temporary change for testing */
+}
+.cardAbout:hover .popup {
+  background-color: red;
+  /* display: block; 
+  opacity: 1;
+  visibility: visible; */
+  /* transform: translateY(-50%) translateX(0); */
+}
+.cardAbout .popup {
+  display: none; /* Initially hidden */
+  position: absolute;
+  top: 50%;
+  width: 900px; /* Adjust as needed */
+  height: 300px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.text-content {
+  flex-grow: 1; 
+  text-align: left; 
+}
+.popup {
+  display: none; /* Hide by default */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px; /* Width of the popup */
+  height: 300px; /* Height of the popup */
+  background: #fff; /* Background color of the popup */
+  border-radius: 20px; /* Same border-radius as the card */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+.left-card .popup {
+  /* right: 100%;  */
+  right: calc(100% + 10px); /* Positioned to the left with a small gap */
+  /* transform: translateY(-50%) translateX(100%); */
+}
+.right-card .popup {
+  /* left: 100%;  */
+  left: calc(100% + 10px); /* Positioned to the right with a small gap */
+  /* transform: translateY(-50%) translateX(-100%);  */
+}
+.left-card {
+  grid-column: 1 / 2; /* Place the left card in the first column */
+  justify-self: end; 
+}
+.right-card {
+  grid-column: 3 / 4; /* Place the right card in the third column */
+  justify-self: start;
+}
+.cardAbout h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
 .about{
   font-size: 1.5rem;
-  padding-bottom: 45vh;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 50rem;
 }
 .articles{
   font-size: 1.5rem;
@@ -81,7 +255,7 @@ body, div {
 }
 .contact{
   font-size: 1.5rem;
-  padding-bottom: 5vh;
+  /* padding-bottom: 5vh; */
   text-align: center;
   display: flex;
   align-items: center;
@@ -117,7 +291,7 @@ body, div {
   z-index: -1;
 }
 .initial-gradient {
-  background: linear-gradient(to right, #000000, #6b6a6a);
+  background: linear-gradient(to right, #000000, #2f323c);
   /* transition: background 1s ease-in-out; */
   position: fixed;
   top: 0;
@@ -127,7 +301,7 @@ body, div {
   z-index: -1;
 }
 .second-gradient {
-  background: linear-gradient(to right, #6a0000, #562319); 
+  background: linear-gradient(to right, #876262, #781400); 
   /* transition: background 1s ease-in-out; */
   position: fixed;
   top: 0;
@@ -152,13 +326,14 @@ body, div {
   z-index: 1000;
   /* background: rgb(2,5,1,255);  */
   /* background: #000403; */
-  background: #030502;
+  /* background: #030502; */
   backdrop-filter: blur(10px); 
   padding-bottom: 20px;
 }
 .push{
   margin-top: 10px;
-  font-size: 1rem;
+  font-size: 1.3rem;
+  padding-right: 3rem;
 }
 .noPointer{
   cursor: pointer;
@@ -179,18 +354,35 @@ body, div {
 }
 .main-container {
   display: flex;
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Center children horizontally */
+  flex-direction: column; 
+  /* position: relative; */
+  align-items: center; 
+}
+.content{
+  /* padding-bottom: 10px; */
 }
 .cube-container {
-  z-index: 1; /* Lower z-index for the cube */
+  z-index: 1; 
+  margin: 0;
+ padding: 0;
 }
+.card-textH{
+  padding-top: 1.5vh;
+  text-align: center;
+  font-size: 2rem;
+  padding-bottom: 2vh;
+}
+.card-text{
+  text-align: center;
+  font-size: 1.5rem;
+}
+
 .card-container {
   display: flex;
   flex-direction: row; 
   justify-content: center;
   align-items: center;
-  height: 80vh; /* Adjust height as needed */
+  height: 80vh;
   position: relative;
   overflow: hidden;
   padding: 0 20px; 
@@ -206,52 +398,265 @@ body, div {
   height: 200px;
   opacity: 0;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.5);
-  /* background: rgba(0,0,0,0.8); */
-  border-radius: 15px; /* Curved edges */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow */
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   margin: 0 40px; 
-  left: 50%;
-  /* backdrop-filter: blur(60px); */
-  /* -webkit-backdrop-filter: blur(0.1px); */
-  backdrop-filter: saturate(180%) blur(10px);
-  animation: slideAndFade 1s forwards;
-  color: black;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: saturate(180%) blur(16px);
+  color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
+  /* display:inline-block; */
+  filter: drop-shadow(0 30px 10px rgba(0,0,0,0.125));
 }
-.card-textH{
-  padding-top: 1.5vh;
+@keyframes cardEnter {
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes cardMoveRight {
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+.card:nth-child(1) {
+  animation: cardEnter 1s forwards;
+  animation-delay: 0s, 0.5s;
+}
+.card:nth-child(2) {
+  animation: cardMoveRight 1s forwards;
+  animation-delay: 1s, 1.5s;
+}
+.card:nth-child(3) {
+  animation: cardMoveRight 1s forwards;
+  animation-delay: 2s, 2.5s;
+}
+.curve {
+  --mask:
+    radial-gradient(40.62px at 50% calc(100% + 21.00px),#0000 calc(99% - 8px),#000 calc(101% - 8px) 99%,#0000 101%) calc(50% - 60px) calc(50% - 19px + .5px)/120px 38px ,
+    radial-gradient(40.62px at 50% -21px,#0000 calc(99% - 8px),#000 calc(101% - 8px) 99%,#0000 101%) 50% calc(50% + 19px)/120px 38px ;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+}
+.path-0 {
+  animation: pathAnim-0 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes pathAnim-0{
+  0%{
+    d: path("M 0,600 C 0,600 0,150 0,150 C 57.47097217451048,169.44829955341808 114.94194434902096,188.89659910683616 191,193 C 267.05805565097904,197.10340089316384 361.7031947784267,185.8619031260735 438,170 C 514.2968052215733,154.1380968739265 572.2452765372723,133.6557883888698 638,150 C 703.7547234627277,166.3442116111302 777.3156990724835,219.51494331844725 839,203 C 900.6843009275165,186.48505668155275 950.4919271727931,100.2844383373411 1019,94 C 1087.508072827207,87.7155616626589 1174.716592236345,161.34730333218826 1248,184 C 1321.283407763655,206.65269666781174 1380.6417038818277,178.32634833390586 1440,150 C 1440,150 1440,600 1440,600 Z");
+  }
+  25%{
+    d: path("M 0,600 C 0,600 0,150 0,150 C 89.68464445207832,141.02026794915835 179.36928890415663,132.0405358983167 242,150 C 304.63071109584337,167.9594641016833 340.2074888354518,212.85812435589145 407,202 C 473.7925111645482,191.14187564410855 571.8007557540363,124.52696667811749 635,126 C 698.1992442459637,127.47303332188251 726.5894881484026,197.03400893163862 792,204 C 857.4105118515974,210.96599106836138 959.8412916523534,155.33699759532806 1044,128 C 1128.1587083476466,100.66300240467193 1194.0453452421848,101.61800068704913 1257,110 C 1319.9546547578152,118.38199931295087 1379.9773273789076,134.19099965647544 1440,150 C 1440,150 1440,600 1440,600 Z");
+  }
+  50%{
+    d: path("M 0,600 C 0,600 0,150 0,150 C 60.89866025420817,117.82823771899692 121.79732050841633,85.65647543799382 187,104 C 252.20267949158367,122.34352456200618 321.7093782205428,191.2023359670216 396,196 C 470.2906217794572,200.7976640329784 549.3651666094125,141.5341806939196 611,123 C 672.6348333905875,104.46581930608039 716.829955341807,126.66094125729991 787,125 C 857.170044658193,123.33905874270009 953.3150120233595,97.8220542768808 1024,109 C 1094.6849879766405,120.1779457231192 1139.9099965647545,168.0508416351769 1205,181 C 1270.0900034352455,193.9491583648231 1355.0450017176227,171.97457918241156 1440,150 C 1440,150 1440,600 1440,600 Z");
+  }
+  75%{
+    d: path("M 0,600 C 0,600 0,150 0,150 C 61.45310889728617,134.68979732050843 122.90621779457234,119.37959464101684 194,137 C 265.09378220542766,154.62040535898316 345.8282377189969,205.1714187564411 425,194 C 504.1717622810031,182.8285812435589 581.78083132944,109.9347303332188 644,114 C 706.21916867056,118.0652696667812 753.048436963243,199.08965991068362 810,200 C 866.951563036757,200.91034008931638 934.0254208175884,121.7066300240467 998,114 C 1061.9745791824116,106.2933699759533 1122.849879766403,170.0838199931295 1196,188 C 1269.150120233597,205.9161800068705 1354.5750601167983,177.95809000343525 1440,150 C 1440,150 1440,600 1440,600 Z");
+  }
+  100%{
+    d: path("M 0,600 C 0,600 0,150 0,150 C 57.47097217451048,169.44829955341808 114.94194434902096,188.89659910683616 191,193 C 267.05805565097904,197.10340089316384 361.7031947784267,185.8619031260735 438,170 C 514.2968052215733,154.1380968739265 572.2452765372723,133.6557883888698 638,150 C 703.7547234627277,166.3442116111302 777.3156990724835,219.51494331844725 839,203 C 900.6843009275165,186.48505668155275 950.4919271727931,100.2844383373411 1019,94 C 1087.508072827207,87.7155616626589 1174.716592236345,161.34730333218826 1248,184 C 1321.283407763655,206.65269666781174 1380.6417038818277,178.32634833390586 1440,150 C 1440,150 1440,600 1440,600 Z");
+  }
+}
+.path-1{
+  animation:pathAnim-1 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes pathAnim-1{
+  0%{
+    d: path("M 0,600 C 0,600 0,300 0,300 C 76.24665063552044,300.4754379938165 152.49330127104088,300.9508759876331 227,300 C 301.5066987289591,299.0491240123669 374.2734455513569,296.6719340432841 448,285 C 521.7265544486431,273.3280659567159 596.4129165235315,252.36138783923047 645,253 C 693.5870834764685,253.63861216076953 716.0748883545173,275.88251459979386 786,274 C 855.9251116454827,272.11748540020614 973.2875300583994,246.10855376159395 1059,255 C 1144.7124699416006,263.89144623840605 1198.7749914118858,307.68327035383027 1257,321 C 1315.2250085881142,334.31672964616973 1377.612504294057,317.15836482308487 1440,300 C 1440,300 1440,600 1440,600 Z");
+  }
+  25%{
+    d: path("M 0,600 C 0,600 0,300 0,300 C 50.265200961868786,306.8464445207833 100.53040192373757,313.6928890415665 168,309 C 235.46959807626243,304.3071109584335 320.1435932669185,288.0748883545173 408,277 C 495.8564067330815,265.9251116454827 586.8952250085882,260.00755754036413 652,254 C 717.1047749914118,247.99244245963587 756.2755066987289,241.8948814840261 819,257 C 881.7244933012711,272.1051185159739 968.002748196496,308.41291652353146 1036,313 C 1103.997251803504,317.58708347646854 1153.7135005152868,290.4534524218481 1218,283 C 1282.2864994847132,275.5465475781519 1361.1432497423566,287.7732737890759 1440,300 C 1440,300 1440,600 1440,600 Z");
+  }
+  50%{
+    d: path("M 0,600 C 0,600 0,300 0,300 C 90.03984884919274,298.0611473720371 180.07969769838547,296.1222947440742 242,284 C 303.9203023016145,271.8777052559258 337.721058055651,249.57196839574027 394,255 C 450.278941944349,260.42803160425973 529.0360700790108,293.5898316729646 605,296 C 680.9639299209892,298.4101683270354 754.1346616283064,270.06870491240124 821,275 C 887.8653383716936,279.93129508759876 948.4252834077638,318.13534867743044 1022,326 C 1095.5747165922362,333.86465132256956 1182.164204740639,311.38990037787704 1254,302 C 1325.835795259361,292.61009962212296 1382.9178976296805,296.3050498110615 1440,300 C 1440,300 1440,600 1440,600 Z");
+  }
+  75%{
+    d: path("M 0,600 C 0,600 0,300 0,300 C 51.444177258674,316.3421504637582 102.888354517348,332.68430092751635 172,341 C 241.111645482652,349.31569907248365 327.890759189282,349.60494675369284 401,343 C 474.109240810718,336.39505324630716 533.548608725524,322.8959120577121 602,311 C 670.451391274476,299.1040879422879 747.9148059086225,288.81140501545855 811,283 C 874.0851940913775,277.18859498454145 922.7921676399862,275.85846788045353 992,273 C 1061.2078323600138,270.14153211954647 1150.9165235314326,265.75472346272755 1229,270 C 1307.0834764685674,274.24527653727245 1373.5417382342837,287.12263826863625 1440,300 C 1440,300 1440,600 1440,600 Z");
+  }
+  100%{
+    d: path("M 0,600 C 0,600 0,300 0,300 C 76.24665063552044,300.4754379938165 152.49330127104088,300.9508759876331 227,300 C 301.5066987289591,299.0491240123669 374.2734455513569,296.6719340432841 448,285 C 521.7265544486431,273.3280659567159 596.4129165235315,252.36138783923047 645,253 C 693.5870834764685,253.63861216076953 716.0748883545173,275.88251459979386 786,274 C 855.9251116454827,272.11748540020614 973.2875300583994,246.10855376159395 1059,255 C 1144.7124699416006,263.89144623840605 1198.7749914118858,307.68327035383027 1257,321 C 1315.2250085881142,334.31672964616973 1377.612504294057,317.15836482308487 1440,300 C 1440,300 1440,600 1440,600 Z");
+  }
+}
+     .path-2{
+            animation:pathAnim-2 4s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+          }
+@keyframes pathAnim-2{
+  0%{
+    d: path("M 0,600 C 0,600 0,450 0,450 C 71.86190312607351,461.0058399175541 143.72380625214703,472.0116798351082 217,475 C 290.276193747853,477.9883201648918 364.96667811748546,472.9591205771213 423,460 C 481.03332188251454,447.0408794228787 522.4094812779114,426.1518378564067 581,414 C 639.5905187220886,401.8481621435933 715.3953967708692,398.4335279972518 793,425 C 870.6046032291308,451.5664720027482 950.0089316386122,508.1140501545861 1027,505 C 1103.9910683613878,501.8859498454139 1178.568876674682,439.110271384404 1247,420 C 1315.431123325318,400.889728615596 1377.715561662659,425.444864307798 1440,450 C 1440,450 1440,600 1440,600 Z");
+  }
+  25%{
+    d: path("M 0,600 C 0,600 0,450 0,450 C 72.83270353830298,472.1202335967022 145.66540707660596,494.24046719340436 210,504 C 274.33459292339404,513.7595328065956 330.17107523187906,511.1583648230848 397,484 C 463.82892476812094,456.8416351769152 541.6502919958778,405.1260735142563 612,400 C 682.3497080041222,394.8739264857437 745.2277567846102,436.3373411198901 817,456 C 888.7722432153898,475.6626588801099 969.438680865682,473.52456200618343 1041,454 C 1112.561319134318,434.47543799381657 1175.0175197526623,397.56441085537614 1240,394 C 1304.9824802473377,390.43558914462386 1372.4912401236688,420.21779457231196 1440,450 C 1440,450 1440,600 1440,600 Z");
+  }
+  50%{
+    d: path("M 0,600 C 0,600 0,450 0,450 C 85.61387839230505,415.68601855032637 171.2277567846101,381.3720371006527 227,398 C 282.7722432153899,414.6279628993473 308.70285125386465,482.19787014771555 380,489 C 451.29714874613535,495.80212985228445 567.9608381999313,441.83648230848513 648,419 C 728.0391618000687,396.16351769151487 771.4537959464101,404.4562006183442 832,409 C 892.5462040535899,413.5437993816558 970.223978014428,414.338715218138 1033,422 C 1095.776021985572,429.661284781862 1143.6502919958775,444.1889385091034 1209,450 C 1274.3497080041225,455.8110614908966 1357.1748540020612,452.9055307454483 1440,450 C 1440,450 1440,600 1440,600 Z");
+  }
+  75%{
+    d: path("M 0,600 C 0,600 0,450 0,450 C 61.672277567846095,481.3527997251804 123.34455513569219,512.7055994503608 185,501 C 246.6554448643078,489.29440054963925 308.2940570250773,434.5304019237375 374,434 C 439.7059429749227,433.4695980762625 509.4792167639987,487.1727928546891 589,478 C 668.5207832360013,468.8272071453109 757.7890759189282,396.7784266575061 841,399 C 924.2109240810718,401.2215733424939 1001.3644795602886,477.7135005152869 1057,502 C 1112.6355204397114,526.2864994847131 1146.7530058399175,498.3675712813466 1207,481 C 1267.2469941600825,463.6324287186534 1353.6234970800413,456.8162143593267 1440,450 C 1440,450 1440,600 1440,600 Z");
+  }
+  100%{
+    d: path("M 0,600 C 0,600 0,450 0,450 C 71.86190312607351,461.0058399175541 143.72380625214703,472.0116798351082 217,475 C 290.276193747853,477.9883201648918 364.96667811748546,472.9591205771213 423,460 C 481.03332188251454,447.0408794228787 522.4094812779114,426.1518378564067 581,414 C 639.5905187220886,401.8481621435933 715.3953967708692,398.4335279972518 793,425 C 870.6046032291308,451.5664720027482 950.0089316386122,508.1140501545861 1027,505 C 1103.9910683613878,501.8859498454139 1178.568876674682,439.110271384404 1247,420 C 1315.431123325318,400.889728615596 1377.715561662659,425.444864307798 1440,450 C 1440,450 1440,600 1440,600 Z");
+  }
+}
+.hands{
+  display: grid;
+  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;
+}
+.wrapper {
+  font-size: 0;
+  user-select: none; /* Prevent text selection during animation */
+}
+.letters {
+  display: inline-block;
+}
+.letter {
+  width: 24px;
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  font-family: sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #eee;
+  position: relative;
+}
+.letter:before {
+  content: attr(data-shuffle); /* Set content to data attribute value */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  animation-fill-mode: forwards;
+}
+/* Repeat this pattern for each letter with unique animation names and timings */
+.letter:nth-child(1):before {
+  animation: letter1 1.5s ease-in-out 0.5s;
+}
+.letter:nth-child(2):before {
+  animation: letter2 1.2s ease-in-out 0.6s;
+}
+
+/* ... More nth-child rules for each letter ... */
+
+/* Keyframes for each letter animation */
+@keyframes letter1 {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+@keyframes letter2 {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+.input-group {
+  margin-bottom: 15px;
+}
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background-color: #f7f7f7;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 25px;
+  outline: none;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+.input-group input:focus,
+.input-group textarea:focus {
+  background-color: #eaeaea;
+}
+.input-group textarea {
+  resize: none;
+  height: 120px;
+}
+button[type="submit"] {
+  padding: 10px 30px;
+  border-radius: 20px;
+  border: none;
+  background-color: #35343f;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button[type="submit"]:hover {
+  background-color: #623034;
+}
+#section3 {
+  position: relative;
+}
+.contact-trigger {
+  cursor: pointer;
+  padding: 10px 30px;
+  border-radius: 20px;
+  background-color: #35343f;
+  color: white;
+  font-size: 18px;
+  /* transition: background-color 0.3s, transform 0.3s; */
+  /* Initially, don't show it as a button */
+  background: none;
+  padding: 0;
+}
+.contact-button {
+  display: none; 
+  /* position: absolute; */
+  padding: 10px 30px;
+  border-radius: 20px;
+  border: none;
+  background-color: #35343f;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.contact-trigger.hoverable:hover {
+  /* Apply button styles on hover */
+  padding: 10px 30px;
+  border-radius: 20px;
+  border: none;
+  background-color: #35343f;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#section3:hover .contact-button {
+  display: block; /* Show button on hover */
+}
+.contact-form-container1 {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease;
+  opacity: 0;
+  /* Other styles */
+}
+.contact-form-container.show {
+  max-height: 1000px; 
+  opacity: 1;
+}
+.contact-form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
   text-align: center;
-  font-size: 2rem;
-  padding-bottom: 2vh;
 }
-.card-text{
-  text-align: center;
-  font-size: 1.5rem;
-}
-#card1 {
-  animation: moveToLeft 2s forwards;
-}
-
-#card2 {
-  animation: moveToMiddle 2s forwards 1s; /* Starts 1 second after the first card */
-}
-
-#card3 {
-  animation: moveToRight 2s forwards 2s; /* Starts 2 seconds after the first card */
-}
-
-@keyframes moveToLeft {
-  0% { left: 80%; opacity: 0; }
-  100% { left: 0; opacity: 1; transform: translateX(0); }
-}
-
-@keyframes moveToMiddle {
-  0% { left: 50%; opacity: 0; }
-  100% { left: 15%; opacity: 1; transform: translateX(-50%); } /* Keeps in the middle */
-}
-
-@keyframes moveToRight {
-  0% { left: 50%; opacity: 0; }
-  100% { left: 30%; opacity: 1; transform: translateX(-100%); } /* Aligns with the right edge */
+.contact-form-container h2 {
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-size: 24px;
+  color: #333;
 }
