@@ -4,7 +4,7 @@ import './globals.css'
 
 import { BoxGeometry, Group, Mesh, MeshStandardMaterial } from 'three'
 import { Parallax, ParallaxLayer } from '@react-spring/parallax'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { animated, useSpring } from '@react-spring/web'
 
 import { Box } from '@radix-ui/themes'
@@ -23,6 +23,7 @@ import textAnimation from './textAnimation';
 const Home = () => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [showButton, setShowButton] = useState(false);
+  const ref = useRef();
   useEffect(() => {
     const observer = textAnimation();
 
@@ -39,7 +40,7 @@ const Home = () => {
     <div>
       <div className="main-container">
         <Parallax pages={7} style={{ top: '0', left: '0' }}>
-          <ParallaxLayer offset={0} speed={0.5} style={{ position: 'relative', height: '100vh' }}>
+          <ParallaxLayer offset={0} speed={0.5} style={{ position: 'relative', height: '100vh' }} onClick={() => ref.current.scrollTo()}>
             <div className="content">
               <HashCards/>
             </div>
@@ -92,7 +93,7 @@ const Home = () => {
               </ParallaxLayer>
               <ParallaxLayer offset={0.3} speed={0.3} factor={1.5} style={{ position: 'relative' }}>
               <div id="section2">
-                <div className="articles">
+                <div className="experience">
                 <ExpCards/>
                 </div>
               </div>

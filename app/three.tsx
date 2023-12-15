@@ -42,7 +42,11 @@ class Cube extends Mesh {
   
     dispose() {
       this.geometry.dispose();
-      this.material.dispose();
+      if (Array.isArray(this.material)) {
+        this.material.forEach(mat => mat.dispose());
+      } else {
+        this.material.dispose();
+      }
     }
   }
   

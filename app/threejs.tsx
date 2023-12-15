@@ -28,7 +28,7 @@ const Cube: React.FC = () => {
     }
     useEffect(() => {
         animate();
-      }, []); 
+      }, ); 
     
       return null; 
     };

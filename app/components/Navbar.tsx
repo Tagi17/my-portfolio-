@@ -32,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({ sectionIds }) => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, );
 
     return (
         <div className='navbar'>

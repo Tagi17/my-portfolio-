@@ -15,10 +15,8 @@ const ScrollBar: React.FC = () => {
                 document.body.classList.add('scroll-active');
             }
         };
-
         document.addEventListener('scroll', handleScroll);
         document.addEventListener('mousemove', handleMouseMove);
-
         return () => {
             document.removeEventListener('scroll', handleScroll);
             document.removeEventListener('mousemove', handleMouseMove);

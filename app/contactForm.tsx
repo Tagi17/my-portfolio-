@@ -4,7 +4,7 @@ const ContactForm = () => {
     return (
         <div className="contact-form-container">
         <h2>MESSAGE ME</h2>
-        <form id="contact-form" action="YOUR_BACKEND_URL" method="POST">
+        <form id="contact-form" action="https://formspree.io/f/xpzvaanz" method="POST">
             <div className="input-group">
                 <input type="text" id="name" name="name" placeholder="Name" required/>
             </div>
