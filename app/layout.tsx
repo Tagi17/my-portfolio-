@@ -9,6 +9,8 @@ import ScrollingBackground from './scrollingBckgrnd';
 import dynamic from 'next/dynamic';
 
 const merriweather = Merriweather({ weight: "400", subsets: ['latin'] })
+const NavbarComponent = dynamic(() => import('./components/Navbar'), { ssr: false });
+const ScrollingBackgroundComponent = dynamic(() => import('./scrollingBckgrnd'), { ssr: false });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -26,8 +28,8 @@ export default function RootLayout({
     <>
     <html lang="en">
         <body className={merriweather.className}>
-          <Navbar sectionIds={sectionIds}/>
-           <ScrollingBackground />
+          <NavbarComponent sectionIds={sectionIds}/>
+           <ScrollingBackgroundComponent />
             {children}
         </body>
     </html>

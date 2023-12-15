@@ -10,28 +10,12 @@ import Image from 'next/image';
 import React from 'react';
 import logo1 from ".././thelettern.png";
 
-// import HtmlCanvas from '.././htmlCanvas';
-
-
-
-
 interface NavbarProps {
   sectionIds: string[];
 }
 
 const Navbar: React.FC<NavbarProps> = ({ sectionIds }) => {
 
-  // const { updateNavbarColor } = HtmlCanvas();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Call updateNavbarColor with the ID of the element below the navbar
-      // updateNavbarColor('element-below-navbar');
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
   const scrollToTop = () => {
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
