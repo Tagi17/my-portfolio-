@@ -20,6 +20,14 @@ import { extend } from '@react-three/fiber'
 import handPic from './HANDSOFNODES.png'
 import textAnimation from './textAnimation';
 
+const HashCardsComponent = dynamic(() => import('./hashCards'), { ssr: false });
+const KubeComponentC = dynamic(() => import('./kubeComponent'), { ssr: false });
+const CubeComponent = dynamic(() => import('./threejs'), { ssr: false });
+const WaveSVGComponent = dynamic(() => import('./waveSVG'), { ssr: false });
+const ExpCardsComponent = dynamic(() => import('./exp'), { ssr: false });
+const ContactFormComponent = dynamic(() => import('./contactForm'), { ssr: false });
+
+
 const Home = () => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [showButton, setShowButton] = useState(false);
@@ -40,7 +48,7 @@ const Home = () => {
         <Parallax pages={7} style={{ top: '0', left: '0' }}>
           <ParallaxLayer offset={0} speed={0.5} style={{ position: 'relative', height: '100vh' }} >
             <div className="content">
-              <HashCards/>
+              <HashCardsComponent/>
             </div>
             </ParallaxLayer>
             <ParallaxLayer offset={0.5} speed={0.5} sticky={{ start: 0.5, end: 0.65 }} >
@@ -65,14 +73,14 @@ const Home = () => {
            </ParallaxLayer> 
            <ParallaxLayer offset={0.5} speed={0.5} style={{ position: 'relative' }}>
             <div className="cube-container">
-              <Cube/>
-              <KubeComponent/>
+              <CubeComponent/>
+              <KubeComponentC/>
             </div>
             </ParallaxLayer>
             <div id="centered-text">
               <div id="section0">
                 <div className="wave-container" style={{ zIndex: -1 }}>
-                  <WaveSVG />
+                  <WaveSVGComponent />
                 </div>
               </div>
               <ParallaxLayer offset={0.5} speed={0.5} style={{ position: 'relative', zIndex: 10 }}>
@@ -92,7 +100,7 @@ const Home = () => {
               <ParallaxLayer offset={0.3} speed={0.3} factor={1.5} style={{ position: 'relative' }}>
               <div id="section2">
                 <div className="experience">
-                <ExpCards/>
+                <ExpCardsComponent/>
                 </div>
               </div>
               </ParallaxLayer>
@@ -105,7 +113,7 @@ const Home = () => {
                     >
                       Contact Me
                     </div>
-                    {showContactForm && <ContactForm />}
+                    {showContactForm && <ContactFormComponent />}
                   </div>
                 </div>
                 </ParallaxLayer>
