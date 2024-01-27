@@ -5,12 +5,13 @@ import Home from './page';
 import { Merriweather } from 'next/font/google'
 import type { Metadata } from 'next'
 import Navbar from './components/Navbar'
+import ParallaxContext from './parallaxContext'
 import ScrollingBackground from './scrollingBckgrnd';
 import dynamic from 'next/dynamic';
 
 const merriweather = Merriweather({ weight: "400", subsets: ['latin'] })
 const NavbarComponent = dynamic(() => import('./components/Navbar'), { ssr: false });
-const ScrollingBackgroundComponent = dynamic(() => import('./scrollingBckgrnd'), { ssr: false });
+// const ScrollingBackgroundComponent = dynamic(() => import('./scrollingBckgrnd'), { ssr: false });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,14 +23,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const sectionIds = ['section1', 'section2', 'section3'];
+  const sectionIds = [
+    { id: 'section1', name: 'About Me' },
+    { id: 'section2', name: 'Experience' },
+    { id: 'section3', name: 'Contact Me' },
+  ];
 
   return (
     <>
     <html lang="en">
         <body className={merriweather.className}>
           <NavbarComponent sectionIds={sectionIds}/>
-           <ScrollingBackgroundComponent />
             {children}
         </body>
     </html>

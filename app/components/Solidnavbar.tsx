@@ -18,6 +18,8 @@ interface Section {
 }
 interface NavbarProps {
   sectionIds: Section[];
+  // parallaxRef: MutableRefObject<HTMLDivElement>;
+  // scrollToSection: (offset: number) => void;
 }
 const sectionIds = [
   { id: 'section1', className:"section", name: 'About Me' },
@@ -31,22 +33,25 @@ const Navbar: React.FC<NavbarProps> = ({ sectionIds }) => {
 
   const scrollToTop = () => {
     if (typeof window !== 'undefined') {
-      console.log("Scroll to top clicked");
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const offsetTop = section.offsetTop - 100; // Adjust '100' based on your needs
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-    }
-  };
+  // const handleNavClick = (id: string) => {
+  //   const sectionIndex = sectionIds.findIndex(section => section.id === id);
+  //   const offset = sectionIndex;  // Assuming each section is one "page"
+  //   console.log(`scrolling to section${id} at index ${sectionIndex} with offset ${offset}`);
+  //   if (parallaxRef.current) {
+  //     console.log("Parallax ref is defined calling scrollTo");
+  //     console.log('scrollTo function exists:', typeof parallaxRef.current.scrollTo === 'function');
+  //     parallaxRef.current.scrollTo(offset);
+  //   }
+  // };
+  
     return (
-      <div className={`sticky top-0 z-[99999] mt-5`}>
+      <div
+        className={`navbar-glass sticky top-0 z-[99999]`}
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.4)" }}
+      >
           <div>
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -57,16 +62,16 @@ const Navbar: React.FC<NavbarProps> = ({ sectionIds }) => {
                 </button>
               </div>
               <div className="ml-4 sm:items-stretch sm:justify-start">
-                <button className=" items-start cursor-pointer" onClick={scrollToTop}>
+                <div className=" items-start">
                   <Image className="h-14 w-auto" src={logo1} width={100} height={100} alt="Your Company"/>
-                </button>
+                </div>
               </div>
               <div className="hidden sm:block place-content-center ">
                   <div className="flex  ">
                     {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-                    <a href="#section1" onClick={() => scrollToSection('section1')} className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-5 py-2 text-lg font-large">About Me</a>
-                    <a href="#section2" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-5 py-2 text-lg font-large">Experience</a>
-                    <a href="#section3" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-5 py-2 text-lg font-large">Contact Me</a>
+                    <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-5 py-2 text-lg font-large">Dashboard</a>
+                    <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-5 py-2 text-lg font-large">Team</a>
+                    <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-5 py-2 text-lg font-large">Projects</a>
                     {/* <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-large">Calendar</a> */}
                   </div>
                 </div>
@@ -80,9 +85,10 @@ const Navbar: React.FC<NavbarProps> = ({ sectionIds }) => {
           <div className="sm:hidden" id="mobile-menu">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-              <a href="#section1" className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">About Me</a>
-              <a href="#section2" className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Experience</a>
-              <a href="#section3" className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Contact Me</a>
+              <a href="#" className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
+              <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
+              <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
+              <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
             </div>
           </div>
       </div>
